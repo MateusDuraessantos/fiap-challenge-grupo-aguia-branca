@@ -48,6 +48,9 @@ fun LoginScreen(modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+    var emailError by remember { mutableStateOf<String?>(null) }
+    var passwordError by remember { mutableStateOf<String?>(null) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -57,7 +60,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
     ) {
         Image(
             painter = painterResource(id = R.drawable.aguia),
-            contentDescription = "Logo FluxOR",
+            contentDescription = "Logo Águia Branca",
             modifier = Modifier.size(200.dp)
         )
 
@@ -70,56 +73,116 @@ fun LoginScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Button(onClick = { selectedProfile = "Operador" }) {
-                Text("Operador")
-            }
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ProfileButton(
+                text = "Operador",
+                selectedProfile = selectedProfile,
+                onClick = { selectedProfile = "Operador" }
+            )
 
-            Button(onClick = { selectedProfile = "Gestor" }) {
-                Text("Gestor")
-            }
+            ProfileButton(
+                text = "Gestor",
+                selectedProfile = selectedProfile,
+                onClick = { selectedProfile = "Gestor" }
+            )
 
-            Button(onClick = { selectedProfile = "Líder" }) {
-                Text("Líder")
-            }
+            ProfileButton(
+                text = "Líder",
+                selectedProfile = selectedProfile,
+                onClick = { selectedProfile = "Líder" }
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
             value = email,
-            onValueChange = { email = it },
-            label = { Text("E-mail") }
+            onValueChange = {
+                email = it
+                emailError = validateEmail(it)
+            },
+            label = { Text("E-mail") },
+            isError = emailError != null,
+            supportingText = {
+                if (emailError != null) Text(emailError!!)
+            }
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = {
+                password = it
+                passwordError = validatePassword(it)
+            },
             label = { Text("Senha") },
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            isError = passwordError != null,
+            supportingText = {
+                if (passwordError != null) Text(passwordError!!)
+            }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
             onClick = {
-                if (email.isBlank() || password.isBlank()) {
-                    Toast.makeText(context, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "Entrando como $selectedProfile", Toast.LENGTH_SHORT).show()
+                emailError = validateEmail(email)
+                passwordError = validatePassword(password)
+
+                if (emailError == null && passwordError == null) {
+                    Toast.makeText(
+                        context,
+                        "Entrando como $selectedProfile",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         ) {
             Text("Entrar")
         }
 
-        TextButton(onClick = {}) {
+        TextButton(
+            onClick = {
+                Toast.makeText(
+                    context,
+                    "Recuperação de senha em breve",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        ) {
             Text("Esqueci minha senha")
         }
+    }
+}
+
+@Composable
+fun ProfileButton(
+    text: String,
+    selectedProfile: String,
+    onClick: () -> Unit
+) {
+    Button(onClick = onClick) {
+        Text(
+            text = if (selectedProfile == text) "✓ $text" else text
+        )
+    }
+}
+
+fun validateEmail(email: String): String? {
+    return when {
+        email.isBlank() -> "Informe seu e-mail"
+        !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> "E-mail inválido"
+        else -> null
+    }
+}
+
+fun validatePassword(password: String): String? {
+    return when {
+        password.isBlank() -> "Informe sua senha"
+        password.length < 6 -> "A senha deve ter pelo menos 6 caracteres"
+        else -> null
     }
 }
 
