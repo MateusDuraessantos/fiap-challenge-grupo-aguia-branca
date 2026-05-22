@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Added missing colors to fix resource linking and allow Theme classes to be built -->
+    <color name="button_primary">#FF6200EE</color>
+    <color name="input_border">#FFBDBDBD</color>
+    <color name="profile_border_selected">#FF6200EE</color>
+    <color name="profile_border_unselected">#FFBDBDBD</color>
 </resources>

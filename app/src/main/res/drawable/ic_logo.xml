@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="110dp"
+    android:height="90dp"
+    android:viewportWidth="110"
+    android:viewportHeight="90">
+
+    <!-- Cabeça da águia -->
+    <path
+        android:fillColor="#1B3A52"
+        android:pathData="M76,4 C87,3 95,11 94,21 C93,29 86,34 78,32 C71,31 66,26 65,20 C61,24 55,22 54,17 C53,12 57,8 62,10 C64,5 70,3 76,4Z" />
+
+    <!-- Bico -->
+    <path
+        android:fillColor="#1B3A52"
+        android:pathData="M94,17 L108,22 L94,26Z" />
+
+    <!-- Penas da asa (4 listras diagonais) -->
+    <path
+        android:fillColor="#1B3A52"
+        android:pathData="M60,31 L2,45 L2,51 L62,38Z" />
+    <path
+        android:fillColor="#1B3A52"
+        android:pathData="M57,40 L0,58 L0,65 L59,47Z" />
+    <path
+        android:fillColor="#1B3A52"
+        android:pathData="M53,50 L0,72 L0,79 L55,57Z" />
+    <path
+        android:fillColor="#1B3A52"
+        android:pathData="M48,60 L0,86 L0,90 L50,67Z" />
+
+</vector>
