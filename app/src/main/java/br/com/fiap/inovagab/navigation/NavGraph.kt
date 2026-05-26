@@ -32,7 +32,6 @@ import br.com.fiap.inovagab.ui.screens.operador.OperadorCreateIdeaScreen
 import br.com.fiap.inovagab.ui.screens.operador.OperadorHomeScreen
 import br.com.fiap.inovagab.ui.screens.operador.OperadorStrategiesScreen
 
-// ─── Guarda de rota ───────────────────────────────────────────────────────────
 @Composable
 fun RouteGuard(
     isAuthorized: Boolean,
@@ -45,7 +44,6 @@ fun RouteGuard(
     if (isAuthorized) content()
 }
 
-// ─── Navegação principal ──────────────────────────────────────────────────────
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
@@ -58,7 +56,6 @@ fun AppNavigation() {
     val isOperadorRoute = currentRoute?.startsWith("operador") == true
     val showBottomBar   = currentRoute != null && currentRoute != "login"
 
-    // Rota ativa para highlight no bottom nav
     val activeGestorRoute = when {
         currentRoute?.startsWith("idea_detail") == true -> "home"
         else -> currentRoute ?: "home"
@@ -73,7 +70,6 @@ fun AppNavigation() {
         else                   -> currentRoute ?: "operador_home"
     }
 
-    // Função de navegação reutilizável
     val navigateTo: (String) -> Unit = { route ->
         navController.navigate(route) {
             popUpTo(navController.graph.findStartDestination().id) {
@@ -110,7 +106,6 @@ fun AppNavigation() {
             modifier         = Modifier.padding(innerPadding)
         ) {
 
-            // ── Login (público) ──────────────────────────────────────────────
             composable("login") {
                 LoginScreen(
                     onLoginSuccess = { profile ->
@@ -118,7 +113,7 @@ fun AppNavigation() {
                         val dest = when (profile) {
                             "Líder"    -> "lider_home"
                             "Operador" -> "operador_home"
-                            else       -> "home"   // Gestor
+                            else       -> "home"
                         }
                         navController.navigate(dest) {
                             popUpTo("login") { inclusive = true }
@@ -127,13 +122,9 @@ fun AppNavigation() {
                 )
             }
 
-            // ════════════════════════════════════════════════════════════════
-            //  ROTAS DO GESTOR
-            // ════════════════════════════════════════════════════════════════
-
             composable("home") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isGestor,
+                    isAuthorized   = authViewModel.isGestor,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -146,7 +137,7 @@ fun AppNavigation() {
 
             composable("strategies") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isGestor,
+                    isAuthorized   = authViewModel.isGestor,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -155,7 +146,7 @@ fun AppNavigation() {
 
             composable("notifications") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isGestor,
+                    isAuthorized   = authViewModel.isGestor,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -168,7 +159,7 @@ fun AppNavigation() {
 
             composable("profile") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isGestor,
+                    isAuthorized   = authViewModel.isGestor,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -182,7 +173,7 @@ fun AppNavigation() {
             composable("idea_detail/{ideaId}") { backStackEntry ->
                 val ideaId = backStackEntry.arguments?.getString("ideaId")?.toIntOrNull() ?: 0
                 RouteGuard(
-                    isAuthorized  = authViewModel.isGestor,
+                    isAuthorized   = authViewModel.isGestor,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -194,13 +185,9 @@ fun AppNavigation() {
                 }
             }
 
-            // ════════════════════════════════════════════════════════════════
-            //  ROTAS DO LÍDER
-            // ════════════════════════════════════════════════════════════════
-
             composable("lider_home") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isLider,
+                    isAuthorized   = authViewModel.isLider,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -213,7 +200,7 @@ fun AppNavigation() {
 
             composable("lider_economia") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isLider,
+                    isAuthorized   = authViewModel.isLider,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -224,7 +211,7 @@ fun AppNavigation() {
 
             composable("lider_strategies") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isLider,
+                    isAuthorized   = authViewModel.isLider,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -237,7 +224,7 @@ fun AppNavigation() {
 
             composable("lider_create_strategy") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isLider,
+                    isAuthorized   = authViewModel.isLider,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -251,7 +238,7 @@ fun AppNavigation() {
 
             composable("lider_notifications") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isLider,
+                    isAuthorized   = authViewModel.isLider,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -264,7 +251,7 @@ fun AppNavigation() {
 
             composable("lider_profile") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isLider,
+                    isAuthorized   = authViewModel.isLider,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -275,13 +262,9 @@ fun AppNavigation() {
                 }
             }
 
-            // ════════════════════════════════════════════════════════════════
-            //  ROTAS DO OPERADOR
-            // ════════════════════════════════════════════════════════════════
-
             composable("operador_home") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isOperador,
+                    isAuthorized   = authViewModel.isOperador,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -294,7 +277,7 @@ fun AppNavigation() {
 
             composable("operador_create_idea") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isOperador,
+                    isAuthorized   = authViewModel.isOperador,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -308,7 +291,7 @@ fun AppNavigation() {
 
             composable("operador_strategies") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isOperador,
+                    isAuthorized   = authViewModel.isOperador,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -317,7 +300,7 @@ fun AppNavigation() {
 
             composable("operador_notifications") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isOperador,
+                    isAuthorized   = authViewModel.isOperador,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
@@ -330,7 +313,7 @@ fun AppNavigation() {
 
             composable("operador_profile") {
                 RouteGuard(
-                    isAuthorized  = authViewModel.isOperador,
+                    isAuthorized   = authViewModel.isOperador,
                     onUnauthorized = {
                         navController.navigate("login") { popUpTo(0) { inclusive = true } }
                     }
