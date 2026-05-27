@@ -21,10 +21,14 @@ fun categoryColor(category: String): Color = when (category) {
 }
 
 fun statusColor(status: String): Color = when (status) {
-    "Aprovado"   -> Color(0xFF4CAF50)
-    "Em análise" -> Color(0xFFFF9800)
-    "Prioritária"-> Color(0xFFF44336)
-    else         -> Color(0xFF9E9E9E)
+    "Em análise"    -> Color(0xFF2196F3)
+    "Aprovada"      -> Color(0xFF4CAF50)
+    "Rejeitada"     -> Color(0xFFE53935)
+    "Virou projeto" -> Color(0xFF9C27B0)
+    "Em andamento"  -> Color(0xFF2196F3)
+    "Concluído"     -> Color(0xFF4CAF50)
+    "Pausado"       -> Color(0xFFFF9800)
+    else            -> Color(0xFF9E9E9E)
 }
 
 @Composable

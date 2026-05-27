@@ -31,7 +31,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.fiap.inovagab.navigation.AppNavigation
+import br.com.fiap.inovagab.ui.navigation.AppNavigation
 import br.com.fiap.inovagab.ui.theme.InovagabTheme
 
 private val PrimaryDark = Color(0xFF1B3A52)

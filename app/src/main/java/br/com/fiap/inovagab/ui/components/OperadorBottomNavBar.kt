@@ -7,9 +7,9 @@ fun OperadorBottomNavBar(
     currentRoute: String,
     onNavigate: (String) -> Unit
 ) {
-
     BottomNavBar(
         currentRoute = currentRoute,
-        onNavigate = onNavigate
+        items        = operadorNavItems,
+        onNavigate   = onNavigate
     )
 }
