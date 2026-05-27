@@ -101,7 +101,7 @@ fun RegisterScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "GAB INSIGHTS",
+            text = "InovaGAB",
             fontSize = 22.sp,
             fontWeight = FontWeight.Black,
             color = RegPrimaryDark,
